@@ -3,14 +3,16 @@ import Main from './components/mainComponent';
 import './App.css';
 import { render } from 'react-dom';
 import { Component } from 'react';
-import {Detail} from '../src/components/DishDetailComponent'
+import { Detail } from '../src/components/DishDetailComponent'
+import { BrowserRouter } from 'react-router-dom'
 class App extends Component {
-  render()
-  {
+  render() {
     return (
-      <div>
-        <Main></Main>
-      </div>
+      <BrowserRouter>
+        <div>
+          <Main></Main>
+        </div>
+      </BrowserRouter>
     );
   }
 }
