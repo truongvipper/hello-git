@@ -22,7 +22,7 @@ class StaffList extends Component {
                         <CardText><h5>Ngày sinh:</h5> {dateFormat(staff.doB,"dd/mm/yy")}</CardText>
                         <CardText><h5>Phòng ban:</h5>{staff.department.name}</CardText>
                         <CardText><h5>Số ngày đã làm thêm:</h5>{staff.overTime}</CardText>
-                        <CardText><h5>Số ngày nghỉ còn lạii:</h5>{staff.annualLeave}</CardText>
+                        <CardText><h5>Số ngày nghỉ còn lại:</h5>{staff.annualLeave}</CardText>
                     </CardBody>
                 </Card>
             )
