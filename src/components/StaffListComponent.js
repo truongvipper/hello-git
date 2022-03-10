@@ -124,19 +124,29 @@ class StaffList extends Component {
   }
 
   //Hàm tìm nhân viên
-  findStaff(event){
-    
-    const target = event.target;
-    const name = target.name;
-    const value = target.value;
+  findStaff() {
+    //get value input
+    var findValue = document.getElementById('search').value;
+    console.log(findValue);
+    //get staff array
+    const {
+      name,
+      salaryScale,
+      startDate,
+      department,
+      salary,
+      doB,
+      annualLeave,
+      overTime,
+      staffList,
+    } = this.state;
+    const staffs = [...staffList];
     this.setState({
-      [name]: value,
-    });
-    //Lấy giá trị trong field
-    //So sánh với tên
-    //Nếu đúng thì filter ra Nhân viên tương ứng
-    if(this.state.search.value===this.state.name){
-      const stafflist = this.state.staffList.filter((staff) => {
+      staffList:staffs
+    })
+    //So sanh gia tri input nhap vao ,neu trung ten thi xuat ra nhan vien tuong ung
+    var foundStaff = staffs.filter((staff) => {
+      if (findValue === name) {
         return (
           <div className="col-6 col-md-4 col-lg-2">
             <div key={staff.id}>
@@ -144,11 +154,9 @@ class StaffList extends Component {
             </div>
           </div>
         );
-      });
-      return stafflist;
-    }
+      }
+    })
   }
-
   //Validate form
   validate(name, salaryScale, annualLeave, overTime) {
     const errors = {
@@ -181,8 +189,8 @@ class StaffList extends Component {
   }
 
   render() {
-    const { search } = this.state;
-   
+
+
 
     //Taọ mới đối tượng nhân viên
 
@@ -203,7 +211,7 @@ class StaffList extends Component {
         </div>
       );
     });
-   
+
     return (
       <div className="container">
         <div className="row">
@@ -331,24 +339,23 @@ class StaffList extends Component {
           </div>
           <div className="col-4">
             {/* //Form them sinh vien */}
-            <form onSubmit={this.findStaff}>
             <div className="d-flex justify-content-start">
-              <Input className="w-100" name="search" 
-              value={this.state.search} type="text" 
-              onChange={this.handelInputChange}></Input>
+              <Input className="w-100" name="search"
+                value={this.state.search} type="text"
+                onChange={this.handelInputChange} id="search"></Input>
               <button
                 class="btn btn-outline-secondary"
                 type="submit"
+                onClick={this.findStaff}
               >
                 Tìm
               </button>
             </div>
-            </form>
           </div>
         </div>
         <div className="row">{stafflist}
         </div>
-     
+
       </div>
     );
   }
