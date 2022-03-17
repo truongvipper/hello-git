@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState,Component } from "react";
 import {
   Card,
   CardImg,
@@ -124,29 +124,15 @@ class StaffList extends Component {
   }
 
   //Hàm tìm nhân viên
-  findStaff() {
+  findStaff(e) {
     //get value input
+    e.preventDefault()
     var findValue = document.getElementById('search').value;
     console.log(findValue);
     //get staff array
-    const {
-      name,
-      salaryScale,
-      startDate,
-      department,
-      salary,
-      doB,
-      annualLeave,
-      overTime,
-      staffList,
-    } = this.state;
-    const staffs = [...staffList];
-    this.setState({
-      staffList:staffs
-    })
-    //So sanh gia tri input nhap vao ,neu trung ten thi xuat ra nhan vien tuong ung
-    var foundStaff = staffs.filter((staff) => {
-      if (findValue === name) {
+
+    if(findValue===this.state.name){
+      this.state.staffList.filter((staff)=>{
         return (
           <div className="col-6 col-md-4 col-lg-2">
             <div key={staff.id}>
@@ -154,8 +140,8 @@ class StaffList extends Component {
             </div>
           </div>
         );
-      }
-    })
+      })
+    }
   }
   //Validate form
   validate(name, salaryScale, annualLeave, overTime) {
@@ -189,9 +175,7 @@ class StaffList extends Component {
   }
 
   render() {
-
-
-
+    
     //Taọ mới đối tượng nhân viên
 
     //Khai báo biến lỗi
