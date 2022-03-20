@@ -1,10 +1,8 @@
-import React, { useState,Component } from "react";
+import React, { Component } from "react";
 import {
   Card,
   CardImg,
-  CardImgOverlay,
   CardTitle,
-  CardText,
   CardBody,
   Breadcrumb,
   BreadcrumbItem,
@@ -17,7 +15,6 @@ import {
   FormGroup,
   FormFeedback,
   Form,
-  option,
 } from "reactstrap";
 import { Link } from "react-router-dom";
 //Danh sách nhân viên
@@ -38,8 +35,8 @@ class StaffList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      search: "",
       staffList: this.props.staff,
+      searchText: "",
       name: "",
       doB: "",
       salaryScale: "",
@@ -67,7 +64,10 @@ class StaffList extends Component {
     this.handelBurl = this.handelBurl.bind(this);
     // this.handelInputChange = this.handelInputChange.bind(this);
     this.handelInputChange = this.handelInputChange.bind(this);
+    this.findStaff=this.findStaff.bind(this);
   }
+
+
   //Hàm modal input
   toggleModal() {
     this.setState({
@@ -76,13 +76,18 @@ class StaffList extends Component {
   }
   //Hàm lấy giá trị input
   handelInputChange(event) {
-    const target = event.target;
-    const name = target.name;
-    const value = target.value;
+    let { name, value } = event.target;
+    console.log('a')
+    console.log(name);
+    console.log(value);
     this.setState({
       [name]: value,
+      searchText: value,
     });
   }
+
+ 
+
 
   //Hàm thay đổi field
   handelBurl = (field) => (evt) => {
@@ -125,22 +130,18 @@ class StaffList extends Component {
 
   //Hàm tìm nhân viên
   findStaff(e) {
+    let { staffList, searchText } = this.state;
     //get value input
     e.preventDefault()
-    var findValue = document.getElementById('search').value;
-    console.log(findValue);
-    //get staff array
-
-    if(findValue===this.state.name){
-      this.state.staffList.filter((staff)=>{
-        return (
-          <div className="col-6 col-md-4 col-lg-2">
-            <div key={staff.id}>
-              <RenderStaffItem staff={staff} />
-            </div>
-          </div>
-        );
-      })
+    console.log('kết quả trước khi tìm:', staffList);
+    console.log('từ khóa:', searchText);
+    if(searchText) {
+      let resultStaffs = staffList.filter(staff => staff.name.toLowerCase().includes(searchText.toLowerCase()))
+      console.log('kết quả sau khi tìm:', resultStaffs);
+      this.setState({ staffList: [...resultStaffs] })
+    } else {
+      console.log('phục hồi lại tìm kiếm', this.props.staff);
+      this.setState({ staffList: this.props.staff })
     }
   }
   //Validate form
@@ -162,11 +163,11 @@ class StaffList extends Component {
     if (this.state.touched.salaryScale && !reg.test(salaryScale)) {
       errors.salaryScale = "Hệ số lương nên là số thập phân";
     }
-
+    var reg1 = /^\d+$/;
     if (
       this.state.touched.annualLeave &&
       this.state.touched.overTime &&
-      !reg.test(annualLeave, overTime)
+      !reg1.test(annualLeave, overTime)
     ) {
       errors.annualLeave = "Số ngày nghỉ không hộp lệ";
       errors.overTime = "Số ngày làm thêm không hợp lệ";
@@ -233,32 +234,30 @@ class StaffList extends Component {
                     <FormFeedback>{errors.name}</FormFeedback>
                   </FormGroup>
                   <FormGroup>
-                    <Label htmlFor="birt">Ngày sinh</Label>
+                    <Label htmlFor="doB">Ngày sinh</Label>
                     <Input
                       type="date"
-                      id="birt"
-                      name="birt"
+                      id="doB"
+                      name="doB"
                       value={this.state.doB}
-                      placeholder="dd/mm/yy"
                       onChange={this.handelInputChange}
                     ></Input>
                   </FormGroup>
                   <FormGroup>
-                    <Label htmlFor="start">Ngày vào công ty</Label>
+                    <Label htmlFor="startDate">Ngày vào công ty</Label>
                     <Input
                       type="date"
-                      id="start"
-                      name="start"
+                      name="startDate"
+                      id="startDate"
                       value={this.state.startDate}
                       onChange={this.handelInputChange}
                     ></Input>
                   </FormGroup>
                   <FormGroup>
-                    <Label htmlFor="depart">Phòng ban</Label>
+                    <Label htmlFor="department">Phòng ban</Label>
                     <Input
                       type="select"
-                      name="depart"
-                      id="depart"
+                      name="department"
                       value={this.state.department}
                       onChange={this.handelInputChange}
                     >
@@ -327,6 +326,7 @@ class StaffList extends Component {
               <Input className="w-100" name="search"
                 value={this.state.search} type="text"
                 onChange={this.handelInputChange} id="search"></Input>
+               
               <button
                 class="btn btn-outline-secondary"
                 type="submit"
