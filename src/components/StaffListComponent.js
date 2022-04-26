@@ -17,12 +17,14 @@ import {
   Form,
 } from "reactstrap";
 import { Link } from "react-router-dom";
+import { Loading } from './LoadingComponent'; 
+import { baseUrl } from "../share/baseUrl";
 //Danh sách nhân viên
 function RenderStaffItem({ staff }) {
   return (
     <Card className="card">
       <Link to={`/nhanvien/${staff.id}`}>
-        <CardImg src="./assets/images/alberto.png" alt={staff.name}></CardImg>
+        <CardImg src={baseUrl + staff.image} alt={staff.name}></CardImg>
         <CardBody>
           <CardTitle className="text-center nameStaff">{staff.name}</CardTitle>
         </CardBody>
@@ -35,7 +37,7 @@ class StaffList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      staffList: this.props.staff,
+      staffList: this.props.staff.staff,
       searchText: "",
       name: "",
       doB: "",
@@ -64,7 +66,7 @@ class StaffList extends Component {
     this.handelBurl = this.handelBurl.bind(this);
     // this.handelInputChange = this.handelInputChange.bind(this);
     this.handelInputChange = this.handelInputChange.bind(this);
-    this.findStaff=this.findStaff.bind(this);
+    this.findStaff = this.findStaff.bind(this);
   }
 
 
@@ -86,7 +88,7 @@ class StaffList extends Component {
     });
   }
 
- 
+
 
 
   //Hàm thay đổi field
@@ -135,7 +137,7 @@ class StaffList extends Component {
     e.preventDefault()
     console.log('kết quả trước khi tìm:', staffList);
     console.log('từ khóa:', searchText);
-    if(searchText) {
+    if (searchText) {
       let resultStaffs = staffList.filter(staff => staff.name.toLowerCase().includes(searchText.toLowerCase()))
       console.log('kết quả sau khi tìm:', resultStaffs);
       this.setState({ staffList: [...resultStaffs] })
@@ -176,7 +178,7 @@ class StaffList extends Component {
   }
 
   render() {
-    
+
     //Taọ mới đối tượng nhân viên
 
     //Khai báo biến lỗi
@@ -196,7 +198,24 @@ class StaffList extends Component {
         </div>
       );
     });
-
+    // if (props.staff.isLoading) {
+    //   return (
+    //     <div className='container'>
+    //       <div className='row'>
+    //         <Loading />
+    //       </div>
+    //     </div>
+    //   )
+    // }
+    // else if (props.staff.errMess) {
+    //   return (
+    //     <div className='container'>
+    //       <div className='row'>
+    //         <h4>{props.staff.errMess}</h4>
+    //       </div>
+    //     </div>
+    //   )
+    // }
     return (
       <div className="container">
         <div className="row">
@@ -326,7 +345,7 @@ class StaffList extends Component {
               <Input className="w-100" name="search"
                 value={this.state.search} type="text"
                 onChange={this.handelInputChange} id="search"></Input>
-               
+
               <button
                 class="btn btn-outline-secondary"
                 type="submit"

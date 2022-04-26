@@ -4,6 +4,9 @@ import { Card, CardImg, CardImgOverlay, CardText, CardBody,
     Modal, ModalHeader, ModalBody, Button, Row, Col } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import dateFormat from 'dateformat';
+import { Loading } from './LoadingComponent';
+import { baseUrl } from '../share/baseUrl';
+
 
 //Chi tiết nhân viên
 function RenderDetail({staff}){
@@ -11,7 +14,7 @@ function RenderDetail({staff}){
         <div className='container'>
             <div className='row mr-5'>
                 <div className='col-12 col-md-4 col-lg-3'>
-                    <img src={staff.image} className="w-100 ml-auto"></img>
+                <CardImg src={staff.image} alt={staff.name}></CardImg>
                 </div>
                 <div className='col-12 col-md-8 col-lg-9'>
                     <h3>Họ và tên:{staff.name}</h3>
@@ -27,6 +30,25 @@ function RenderDetail({staff}){
 }
 
 const StaffDetail=(props)=>{
+    if(props.staffLoading){
+        return(
+            <div className='container'>
+                <div className='row'>
+                    <Loading/>
+                </div>
+            </div>
+        )
+    }
+    else if(props.staffErrMess){
+        return(
+            <div className='container'>
+                <div className='row'>
+                    <h4>{props.staffErrMess}</h4>
+                </div>
+            </div>
+        )
+    }
+
     if(props.staff !=null)
     return(
         <div className='container'>
