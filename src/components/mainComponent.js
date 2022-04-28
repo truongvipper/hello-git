@@ -8,7 +8,7 @@ import SalaryList from "./SalaryComponent";
 import StaffDetail from "./StaffDetailComponent";
 import Detail from "./StaffDetailComponent";
 import StaffList from "./StaffListComponent";
-import {fetchStaff} from '../redux/ActionCreator'
+import {fetchStaff,fetchDepart} from '../redux/ActionCreator'
 import {connect} from 'react-redux';
 
 const mapStateToProps=state=>{
@@ -19,7 +19,8 @@ const mapStateToProps=state=>{
 }
 
 const mapDispatchToProps=(dispatch)=>({
-    fetchStaff:()=>{dispatch(fetchStaff())}
+    fetchStaff:()=>{dispatch(fetchStaff())},
+    fetchDepart:()=>{dispatch(fetchDepart())}
 })
 
 
@@ -31,6 +32,7 @@ class Main extends Component {
     componentDidMount(){
         debugger
         this.props.fetchStaff()
+        this.props.fetchDepart()
     }    
 
     render() {
@@ -39,6 +41,7 @@ class Main extends Component {
                 <StaffDetail staff={this.props.staff.staff.filter((staff)=>staff.id===parseInt(match.params.staffId,10))[0]} 
                 staffLoading={this.props.staff.isLoading}
                 staffErrMess={this.props.staff.errMess}
+                depart={this.props.depart.depart}
                 />
             )
         }
@@ -47,7 +50,7 @@ class Main extends Component {
             <div>
                 <Header />
                 <Switch>
-                    <Route exact path="/nhanvien" component={() => <StaffList staff={this.props.staff} />}></Route>
+                    <Route exact path="/nhanvien" component={() => <StaffList staffLoading={this.props.staff.isLoading} staff={this.props.staff} />}></Route>
                     <Route path="/nhanvien/:staffId" component={staffWithId}></Route>
                     <Route exact path="/phongban" component={() => <DepartList depart={this.props.depart} />} ></Route>
                     <Route exact path="/bangluong" component={() => <SalaryList staff={this.props.staff} />} ></Route>

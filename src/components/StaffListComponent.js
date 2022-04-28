@@ -24,7 +24,7 @@ function RenderStaffItem({ staff }) {
   return (
     <Card className="card">
       <Link to={`/nhanvien/${staff.id}`}>
-        <CardImg src={baseUrl + staff.image} alt={staff.name}></CardImg>
+        <CardImg src={staff.image} alt={staff.name}></CardImg>
         <CardBody>
           <CardTitle className="text-center nameStaff">{staff.name}</CardTitle>
         </CardBody>
@@ -198,7 +198,7 @@ class StaffList extends Component {
         </div>
       );
     });
-    // if (props.staff.isLoading) {
+    // if (props.staffLoading) {
     //   return (
     //     <div className='container'>
     //       <div className='row'>
@@ -207,11 +207,11 @@ class StaffList extends Component {
     //     </div>
     //   )
     // }
-    // else if (props.staff.errMess) {
+    // else if (errMess) {
     //   return (
     //     <div className='container'>
     //       <div className='row'>
-    //         <h4>{props.staff.errMess}</h4>
+    //         <h4>{staff.errMess}</h4>
     //       </div>
     //     </div>
     //   )

@@ -9,7 +9,26 @@ import { baseUrl } from '../share/baseUrl';
 
 
 //Chi tiết nhân viên
-function RenderDetail({staff}){
+function RenderDetail({staff,staffLoading,staffErrMess,depart}){
+    const departName=depart.find(value.id==staff.departmentId)
+    if(staffLoading){
+        return(
+            <div className='container'>
+                <div className='row'>
+                    <Loading/>
+                </div>
+            </div>
+        )
+    }
+    else if(staffErrMess){
+        return(
+            <div className='container'>
+                <div className='row'>
+                    <h4>{staffErrMess}</h4>
+                </div>
+            </div>
+        )
+    }
     return(
         <div className='container'>
             <div className='row mr-5'>
@@ -20,7 +39,7 @@ function RenderDetail({staff}){
                     <h3>Họ và tên:{staff.name}</h3>
                     <p>Ngày sinh:{dateFormat(staff.dob,"dd/mm/yy")}</p>
                     <p>Ngày vào công ty:{dateFormat(staff.startDate,"dd/mm/yy")}</p>
-                    <p>Phòng ban:{staff.department.name}</p>
+                    <p>Phòng ban:{staff.departmentId}</p>
                     <p>Số ngày nghỉ còn lại:{staff.annualLeave}</p>
                     <p>Số ngày đã làm thêm:{staff.overTime}</p>
                 </div>
@@ -30,25 +49,6 @@ function RenderDetail({staff}){
 }
 
 const StaffDetail=(props)=>{
-    if(props.staffLoading){
-        return(
-            <div className='container'>
-                <div className='row'>
-                    <Loading/>
-                </div>
-            </div>
-        )
-    }
-    else if(props.staffErrMess){
-        return(
-            <div className='container'>
-                <div className='row'>
-                    <h4>{props.staffErrMess}</h4>
-                </div>
-            </div>
-        )
-    }
-
     if(props.staff !=null)
     return(
         <div className='container'>
@@ -59,7 +59,7 @@ const StaffDetail=(props)=>{
                     </Breadcrumb>
             </div>
             <div className='row'>
-                <RenderDetail staff={props.staff} />
+                <RenderDetail staff={props.staff} staffLoading={props.staffLoading}/>
             </div>
         </div>
     );
