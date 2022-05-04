@@ -10,6 +10,7 @@ import Detail from "./StaffDetailComponent";
 import StaffList from "./StaffListComponent";
 import {fetchStaff,fetchDepart} from '../redux/ActionCreator'
 import {connect} from 'react-redux';
+import Staffdepart from "./StaffDepartComponent";
 
 const mapStateToProps=state=>{
     return{
@@ -46,14 +47,26 @@ class Main extends Component {
             )
         }
 
+        // depart={this.props.depart.depart}
+        const staff_with_depart=({match})=>{
+            //Lấy id phòng ban,xong ánh xạ lên id nhân viên ,rồi filter ra nhân viên tương ứng
+            const departGet =depart.find(dep => dep.id == staff.departmentId);
+            return(
+                <Staffdepart depart={this.props.depart.depart}  staff={this.props.staff.staff.filter((departGet)=>departGet===parseInt(match.params.departId))}></Staffdepart>
+            )
+        }
+        
+
+
         return (
             <div>
                 <Header />
                 <Switch>
                     <Route exact path="/nhanvien" component={() => <StaffList staffLoading={this.props.staff.isLoading} staff={this.props.staff} />}></Route>
                     <Route path="/nhanvien/:staffId" component={staffWithId}></Route>
-                    <Route exact path="/phongban" component={() => <DepartList depart={this.props.depart} />} ></Route>
-                    <Route exact path="/bangluong" component={() => <SalaryList staff={this.props.staff} />} ></Route>
+                    <Route exact path="/phongban" component={() => <DepartList depart={this.props.depart.depart} />} ></Route>
+                    <Route exact path="/staffDepart/:departId:" component={staff_with_depart}></Route>
+                    <Route exact path="/bangluong" component={() => <SalaryList staff={this.props.staff.staff} />} ></Route>
                     <Redirect to="/nhanvien"></Redirect>
                 </Switch>
                 <Footer />

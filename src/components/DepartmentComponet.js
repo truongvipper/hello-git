@@ -5,8 +5,10 @@ import { Link } from 'react-router-dom';
 function RenderDepart({depart}){
     return(
         <Card>
+            <Link to={`/staffDepart/${depart.id}`}>
             <CardText>{depart.name}</CardText>
             <CardText>Số lượng nhân viên :{depart.numberOfStaff}</CardText>
+            </Link>
         </Card>
     )
 }

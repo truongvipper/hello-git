@@ -8,11 +8,11 @@ export const Depart=(state={
     ,action)=>{
     switch(action.type){
         case ActionTypes.ADD_DEPART:
-            return { ...state, isLoading: false, errMess: null, staff: action.payload };
+            return { ...state, isLoading: false, errMess: null, depart: action.payload };
         case ActionTypes.DEPART_LOADING:
-            return { ...state, isLoading: true, errMess: null, staff: [] };
+            return { ...state, isLoading: true, errMess: null, depart: [] };
         case ActionTypes.FAILED_DEPART:
-            return { ...state, isLoading: false, errMess: action.payload, staff: [] }
+            return { ...state, isLoading: false, errMess: action.payload, depart: [] }
         default:
             return state
     }

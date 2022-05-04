@@ -13,7 +13,7 @@ export const fetchDepart=()=>(dispatch)=>{
     dispatch(departLoading(true));
     return fetch(baseUrl+'depart')
     .then(response=>response.json())
-    .then(depart=>depart(addDepart(depart)))
+    .then(depart=>dispatch(addDepart(depart)))
 }
 
 

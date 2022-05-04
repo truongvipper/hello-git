@@ -10,7 +10,7 @@ import { baseUrl } from '../share/baseUrl';
 
 //Chi tiết nhân viên
 function RenderDetail({staff,staffLoading,staffErrMess,depart}){
-    const departName=depart.find(value.id==staff.departmentId)
+    const departGet =depart.find(dep => dep.id == staff.departmentId);
     if(staffLoading){
         return(
             <div className='container'>
@@ -39,7 +39,7 @@ function RenderDetail({staff,staffLoading,staffErrMess,depart}){
                     <h3>Họ và tên:{staff.name}</h3>
                     <p>Ngày sinh:{dateFormat(staff.dob,"dd/mm/yy")}</p>
                     <p>Ngày vào công ty:{dateFormat(staff.startDate,"dd/mm/yy")}</p>
-                    <p>Phòng ban:{staff.departmentId}</p>
+                    <p>Phòng ban:{departGet.name}</p>
                     <p>Số ngày nghỉ còn lại:{staff.annualLeave}</p>
                     <p>Số ngày đã làm thêm:{staff.overTime}</p>
                 </div>
@@ -59,7 +59,7 @@ const StaffDetail=(props)=>{
                     </Breadcrumb>
             </div>
             <div className='row'>
-                <RenderDetail staff={props.staff} staffLoading={props.staffLoading}/>
+                <RenderDetail staff={props.staff} depart={props.depart} staffLoading={props.staffLoading}/>
             </div>
         </div>
     );
