@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, CardImg, CardImgOverlay, CardTitle, CardText, CardBody,Breadcrumb,BreadcrumbItem } from "reactstrap"
+import { Card, CardText} from "reactstrap"
 import { Link } from 'react-router-dom';
 //function hiện ra danh sách phòng ban  và số lượng tương ứng
 function RenderDepart({depart}){
@@ -12,6 +12,7 @@ function RenderDepart({depart}){
         </Card>
     )
 }
+//Map như danh sách nhân viên đúng ko ạ,nếu như thế thì để em tự làm
 
 const DepartList = (props) => {
     const departList = props.depart.map((depart) => {

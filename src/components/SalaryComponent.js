@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, CardImg, CardImgOverlay, CardTitle, CardText, CardBody, Breadcrumb, BreadcrumbItem } from "reactstrap"
+import { Card,  CardTitle, CardText, CardBody, Breadcrumb, BreadcrumbItem } from "reactstrap"
 import { Link } from 'react-router-dom';
 
 function RenderSalary({ staff }) {

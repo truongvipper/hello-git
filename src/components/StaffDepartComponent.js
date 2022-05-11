@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Card, CardImg, CardBody,
     CardTitle } from 'reactstrap';
-import { Link } from 'react-router-dom';
+//Dạ đây anh 
 
 function RenderStaffdepart({ staff }) {
     return (
@@ -15,17 +15,25 @@ function RenderStaffdepart({ staff }) {
 }
 
 const Staffdepart=(props)=>{
-    if(props.staff !=null)
+    //if(props.staff !=null)
+    
+    const deprtStaff=props.staff.map((staff)=>{
+        return(
+            <div key={staff.id} className="col-6 col-md-4 col-lg-2">
+                <RenderStaffdepart  staff={staff}></RenderStaffdepart>
+            </div>
+        )
+    })
     return(
         <div className='container'>
             <div className='row'>
-                <RenderStaffdepart staff={props.staff}></RenderStaffdepart>
+                {deprtStaff}
             </div>
         </div>
     );
-    else
-    return(
+    //else
+    /*return(
         <div></div>
-    )
+    )*/
 }
 export default Staffdepart

@@ -19,6 +19,7 @@ import {
 import { Link } from "react-router-dom";
 import { Loading } from './LoadingComponent'; 
 import { baseUrl } from "../share/baseUrl";
+
 //Danh sách nhân viên
 function RenderStaffItem({ staff }) {
   return (
@@ -88,15 +89,13 @@ class StaffList extends Component {
     });
   }
 
-
-
-
   //Hàm thay đổi field
   handelBurl = (field) => (evt) => {
     this.setState({
       touched: { ...this.state.touched, [field]: true },
     });
   };
+
   //Hàm thêm nhân viên
   handelAdd(e) {
     e.preventDefault();
@@ -178,9 +177,7 @@ class StaffList extends Component {
   }
 
   render() {
-
     //Taọ mới đối tượng nhân viên
-
     //Khai báo biến lỗi
     const errors = this.validate(
       this.state.name,

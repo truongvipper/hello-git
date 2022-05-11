@@ -1,4 +1,3 @@
-import { DEPARTMENTS, } from "../share/staff";
 import * as ActionTypes from './ActionType'
 export const Depart=(state={
     isLoading:true,
@@ -8,7 +7,7 @@ export const Depart=(state={
     ,action)=>{
     switch(action.type){
         case ActionTypes.ADD_DEPART:
-            return { ...state, isLoading: false, errMess: null, depart: action.payload };
+            return { ...state, isLoading: true, errMess: null, depart: action.payload };
         case ActionTypes.DEPART_LOADING:
             return { ...state, isLoading: true, errMess: null, depart: [] };
         case ActionTypes.FAILED_DEPART:

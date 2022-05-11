@@ -1,5 +1,7 @@
 export const STAFF_LOADING='STAFF_LOADING';
+export const STAFF_LOADED='STAFF_LOADED';
 export const ADD_STAFF='ADD_LOADING';
+export const ADD_ONE_STAFF='ADD_ONE_STAFF';
 export const FAILED_STAFF='FAILED_STAFF';
 
 export const DEPART_LOADING='DEPART_LOADING';

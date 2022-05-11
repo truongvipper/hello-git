@@ -1,17 +1,23 @@
-import React, { Component } from 'react';
-import { Card, CardImg, CardImgOverlay, CardText, CardBody,
-    CardTitle, Breadcrumb, BreadcrumbItem, Label,
-    Modal, ModalHeader, ModalBody, Button, Row, Col } from 'reactstrap';
+import React, { useState, useEffect } from 'react';
+import {  CardImg,Breadcrumb, BreadcrumbItem,} from 'reactstrap';
 import { Link } from 'react-router-dom';
 import dateFormat from 'dateformat';
 import { Loading } from './LoadingComponent';
-import { baseUrl } from '../share/baseUrl';
-
+import { staffLoading } from '../redux/ActionCreator';
 
 //Chi tiết nhân viên
-function RenderDetail({staff,staffLoading,staffErrMess,depart}){
+function RenderDetail({staff,staffLoading,staffErrMess,depart}) {
     const departGet =depart.find(dep => dep.id == staff.departmentId);
-    if(staffLoading){
+    
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        setTimeout(()=>setLoading(false), 3000);
+        //Thực tế: đây là chỗ gọi API get staff by id
+        //then.(setLoading(false))
+    }, []);
+
+    if(loading){ //cái này đang mãi mãi true và không có cái gì set nó lại thành false
         return(
             <div className='container'>
                 <div className='row'>

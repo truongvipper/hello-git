@@ -6,7 +6,6 @@ import Footer from "./FooterCompoent";
 import Header from "./HeaderComponent";
 import SalaryList from "./SalaryComponent";
 import StaffDetail from "./StaffDetailComponent";
-import Detail from "./StaffDetailComponent";
 import StaffList from "./StaffListComponent";
 import {fetchStaff,fetchDepart} from '../redux/ActionCreator'
 import {connect} from 'react-redux';
@@ -31,7 +30,6 @@ class Main extends Component {
     }
 
     componentDidMount(){
-        debugger
         this.props.fetchStaff()
         this.props.fetchDepart()
     }    
@@ -40,19 +38,27 @@ class Main extends Component {
         const staffWithId = ({match} ) => {
             return (
                 <StaffDetail staff={this.props.staff.staff.filter((staff)=>staff.id===parseInt(match.params.staffId,10))[0]} 
-                staffLoading={this.props.staff.isLoading}
-                staffErrMess={this.props.staff.errMess}
-                depart={this.props.depart.depart}
+                    staffLoading={this.props.staff.isLoading}
+                    staffErrMess={this.props.staff.errMess}
+                    depart={this.props.depart.depart}
                 />
             )
         }
 
-        // depart={this.props.depart.depart}
-        const staff_with_depart=({match})=>{
-            //Lấy id phòng ban,xong ánh xạ lên id nhân viên ,rồi filter ra nhân viên tương ứng
-            const departGet =depart.find(dep => dep.id == staff.departmentId);
+        
+        const staff_with_depart=({match})=>{ 
+            const depId = match.params.departId //lấy mã phòng từ cái url
+            // const depart = this.props.depart.depart;
+            const allStaff = this.props.staff.staff;
+            // Lấy id phòng ban,xong ánh xạ lên id nhân viên ,rồi filter ra nhân viên tương ứng
+            // const departGet = depart.find(dep => dep.id == staff.departmentId);
+            const staff = allStaff.filter(s => s.departmentId === depId); //lấy nhân viên có phòng ban là depId
+            //vì em chưa xài cái biến staff này
+            debugger
             return(
-                <Staffdepart depart={this.props.depart.depart}  staff={this.props.staff.staff.filter((departGet)=>departGet===parseInt(match.params.departId))}></Staffdepart>
+                //Hay 
+                <Staffdepart staffLoading={this.props.staff.isLoading} staff={staff} />
+                // <Staffdepart depart={this.props.depart.depart}  staff={this.props.staff.staff.filter((departGet)=>departGet===parseInt(match.params.departId))}></Staffdepart>
             )
         }
         
@@ -65,7 +71,7 @@ class Main extends Component {
                     <Route exact path="/nhanvien" component={() => <StaffList staffLoading={this.props.staff.isLoading} staff={this.props.staff} />}></Route>
                     <Route path="/nhanvien/:staffId" component={staffWithId}></Route>
                     <Route exact path="/phongban" component={() => <DepartList depart={this.props.depart.depart} />} ></Route>
-                    <Route exact path="/staffDepart/:departId:" component={staff_with_depart}></Route>
+                    <Route exact path="/staffDepart/:departId" component={staff_with_depart}></Route>
                     <Route exact path="/bangluong" component={() => <SalaryList staff={this.props.staff.staff} />} ></Route>
                     <Redirect to="/nhanvien"></Redirect>
                 </Switch>
@@ -74,4 +80,5 @@ class Main extends Component {
         )
     }
 }
+
 export default withRouter(connect(mapStateToProps,mapDispatchToProps)(Main)) 
